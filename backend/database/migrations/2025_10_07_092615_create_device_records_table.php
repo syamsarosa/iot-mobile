@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('device_records', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->string('id', 20)->primary();
+            $table->string('device_id', 20);
+            $table->decimal('temp', 5, 2);
+            $table->decimal('hum', 5, 2);
+            $table->dateTime('measurement_time');
+
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
